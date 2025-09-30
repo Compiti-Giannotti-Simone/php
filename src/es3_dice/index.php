@@ -28,10 +28,14 @@ function draw_die($number)
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
-<body>
-    <form class="text-center mt-5" action="" method="get">
+<body class="bg-dark text-white quicksand-400">
+    <h1 class="text-center mt-3">Roll the dice</h1>
+    <form class="text-center mt-3" action="" method="get">
         <button type="submit" class="btn btn-primary">Roll</button>
     </form>
 
@@ -42,6 +46,7 @@ function draw_die($number)
     echo draw_die($die1);
     echo draw_die($die2);
     echo '</div>';
+    echo '<h3 class="text-center text-success mt-3">result: ' . ($die1 + $die2) . '</h3>';
     ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
