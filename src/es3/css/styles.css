@@ -1,0 +1,23 @@
+.die {
+    width: 120px;
+    height: 120px;
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 10px;
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    gap: 8px;
+    margin: 0 10px;
+    box-shadow: 4px 4px 16px #bbb;
+}
+.pip {
+    width: 24PX;
+    height: 24PX;
+    border-radius: 50%;
+    background: transparent;
+    display: block;
+    margin: auto;
+}
+.pip.on {
+    background: #333;
+}
