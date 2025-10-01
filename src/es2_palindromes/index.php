@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <?php include '../head.php'; ?>
 </head>
 
 <body>
@@ -27,6 +25,8 @@
         echo '<p>La stinga senza vocali è: ' . $no_vowels . '</p>';
     }
     ?>
+
+    <?php include '../scripts.php'; ?>
 </body>
 
 </html>
