@@ -12,7 +12,7 @@ if(!isset($_SESSION['cart'])) {
 </head>
 
 <body class="">
-    <h1 class="text-center">Aggiungi contatto</h1>
+    <h1 class="text-center">Online Shop</h1>
 
     <?php
     if (isset($_POST["product"])) {
