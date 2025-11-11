@@ -1,19 +1,25 @@
 <?php
-class Table {
+class Table
+{
     public $num;
-    public $waiter;
+    public $waiter = "";
     public $plates = array();
 
-    function __construct($num) {
+    function __construct($num)
+    {
         $this->num = $num;
     }
 
-    function set_waiter($waiter) {
+    function set_waiter($waiter)
+    {
         $this->waiter = $waiter;
     }
 
     function add_plate($plate) {
-        $this->plates.push($plate);
+        if (!isset($this->plates[$plate])) {
+            $this->plates[$plate] = 0;
+        } 
+        $this->plates[$plate]++;
     }
 }
 ?>
