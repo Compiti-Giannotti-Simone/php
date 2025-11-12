@@ -11,7 +11,7 @@ session_start();
 </head>
 
 <body class="">
-    <h1 class="text-center">Tavoli liberi</h1>
+    <h1 class="text-center">Seleziona tavolo</h1>
     <?php
     if (isset($_GET["error"])) {
         $error = $_GET["error"];
@@ -22,26 +22,35 @@ session_start();
         ";
     }
     ?>
+    <?php
+    echo "<h3 class='text-center'>Utente: " . $_SESSION["user"] . "</h3>"
+        ?>
+    <div class="text-center mb-3">
+        <a href="./logout.php" class="btn btn-sm btn-secondary me-2">Logout</a>
+        <a href="./end_day.php" class="btn btn-sm btn-danger">Finisci giornata</a>
+    </div>
+    <h2 class="text-center">Tavoli liberi</h2>
     <div class="container">
         <div class='row row-cols-4'>
-        <?php
-            for ($i= 0; $i < sizeof($_SESSION["tables"]) ; $i++) {
+            <?php
+            for ($i = 0; $i < sizeof($_SESSION["tables"]); $i++) {
+                $price = number_format($_SESSION["tables"][$i]->calculate_price(), 2) . " €";
                 $title = "Tavolo " . strval($i);
-                $plates_num = sizeof($_SESSION["tables"][$i]->plates);
+                $plates_num = array_sum($_SESSION["tables"][$i]->plates);
                 $waiter = $_SESSION["tables"][$i]->waiter == "" ? "Nessuno" : $_SESSION["tables"][$i]->waiter;
-                if($waiter == "Nessuno") {
+                if ($waiter == "Nessuno") {
                     $disabled = "";
-                }
-                else { 
+                } else {
                     $disabled = "disabled";
                 }
-                echo"<div class='col-3 my-4'>";
-                echo"
+                echo "<div class='col-3 my-4'>";
+                echo "
                 <div class='card'>
                     <div class='card-body'>
                         <h5 class='card-title'>$title</h5>
                         <p class='card-text'>Cameriere: $waiter</p>
                         <p class='card-text'>Piatti: $plates_num</p>
+                        <p class='card-text'>Totale: $price</p>
                         <form action='claim_table.php' method='post' class='d-inline'>
                             <input type='hidden' name='table_num' value='$i'>
                             <button $disabled type='submit' class='btn btn-primary'>Prendi</button>
@@ -49,28 +58,33 @@ session_start();
                     </div>
                 </div>
                 ";
-                echo"</div>";
+                echo "</div>";
             }
-        ?>
+            ?>
         </div>
     </div>
 
-    <h1 class="text-center">I tuoi tavoli</h1>
+    <h2 class="text-center">I tuoi tavoli</h2>
 
     <div class="container">
         <div class='row row-cols-4'>
-        <?php
-            for ($i= 0; $i < sizeof($_SESSION["tables"]) ; $i++) {
-                if($_SESSION["tables"][$i]->waiter == $_SESSION["user"]) {
-                $title = "Tavolo " . strval($i);
-                $plates_num = sizeof($_SESSION["tables"][$i]->plates);
-                $waiter = $_SESSION["tables"][$i]->waiter ?? "Nessuno";
-                echo"<div class='col-3 my-4'>";
-                echo"
+            <?php
+            $user_tables = 0;
+            for ($i = 0; $i < sizeof($_SESSION["tables"]); $i++) {
+                if ($_SESSION["tables"][$i]->waiter == $_SESSION["user"]) {
+                    $user_tables++;
+                    $price = number_format($_SESSION["tables"][$i]->calculate_price(), 2) . " €";
+                    $title = "Tavolo " . strval($i);
+                    $plates_num = array_sum($_SESSION["tables"][$i]->plates);
+                    $total_price = $price;
+                    $waiter = $_SESSION["tables"][$i]->waiter ?? "Nessuno";
+                    echo "<div class='col-3 my-4'>";
+                    echo "
                 <div class='card'>
                     <div class='card-body'>
                         <h5 class='card-title'>$title</h5>
                         <p class='card-text'>Piatti: $plates_num</p>
+                        <p class='card-text'>Totale: $price</p>
                         <form action='manage_table.php' method='get' class='d-inline'>
                             <input type='hidden' name='table_num' value='$i'>
                             <button type='submit' class='btn btn-primary'>Gestisci</button>
@@ -78,14 +92,20 @@ session_start();
                     </div>
                 </div>
                 ";
-                echo"</div>";
+                    echo "</div>";
                 }
             }
-        ?>
+
+            ?>
         </div>
+        <?php
+        if ($user_tables == 0) {
+            echo "<h5 class='text-center'>Non hai ancora preso in carico nessun tavolo.</h5>";
+        }
+        ?>
     </div>
 
-    
+
 
 
     <?php include "../scripts.php" ?>
